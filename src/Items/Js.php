@@ -6,21 +6,21 @@
  * Time: 19:27
  */
 
-namespace Inhere\Asset\Resource;
+namespace Inhere\Asset\Items;
 
 use Inhere\Asset\AssetItem;
 
 /**
- * Class CssFile
- * @package Inhere\Asset\Resource
+ * Class JsFile
+ * @package Inhere\Asset\Items
  */
-final class CssFile extends AssetItem
+final class Js extends AssetItem
 {
     /**
      * @inheritdoc
      */
     public function __construct($type, $path, $local = true, $filter = true, $attributes = null)
     {
-        parent::__construct(self::CSS, $path, $local, $filter, $attributes);
+        parent::__construct(self::JS, $path, $local, $filter, $attributes);
     }
 }

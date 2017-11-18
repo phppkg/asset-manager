@@ -25,6 +25,11 @@ class AssetItem implements AssetItemInterface
     /**
      * @var string
      */
+    private $key;
+
+    /**
+     * @var string
+     */
     private $type;
 
     /**
@@ -55,14 +60,30 @@ class AssetItem implements AssetItemInterface
      * @param bool $filter
      * @param null|array $attributes
      */
-    public function __construct(string $type, string $path, bool $local = true, bool $filter = true, $attributes = null)
+    public function __construct(string $type, string $path, $local = true, $filter = true, $attributes = null)
     {
         $this->type = $type;
         $this->path = $path;
-        $this->local = $local;
-        $this->filter = $filter;
+        $this->local = (bool)$local;
+        $this->filter = (bool)$filter;
         $this->attributes = $attributes;
+
+        $this->getKey();
     }
+
+    /**
+     * Get the resource's key.
+     * @return string
+     */
+    public function getKey()
+	{
+	    if (!$this->key) {
+            $key = $this->getType() . ':' . $this->getPath();
+            $this->key = substr(md5($key), 0, 10);
+        }
+
+		return $this->key;
+	}
 
     /**
      * @return string
