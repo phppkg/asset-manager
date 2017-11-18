@@ -9,7 +9,6 @@
 namespace Inhere\Asset\Filter;
 
 use Inhere\Asset\Interfaces\FilterInterface;
-use MatthiasMullie\Minify;
 
 /**
  * Class CssMinify
@@ -17,11 +16,11 @@ use MatthiasMullie\Minify;
  */
 class CssMinify implements FilterInterface
 {
-    private $minifier;
+    // private $minifier;
 
     public function __construct()
     {
-        $this->minifier = new Minify\CSS();
+        // $this->minifier = new Minify\CSS();
     }
 
     /**
@@ -30,7 +29,6 @@ class CssMinify implements FilterInterface
      */
     public function filter(string $content): string
     {
-
         return $content;
     }
 }
