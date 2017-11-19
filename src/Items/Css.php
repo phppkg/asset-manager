@@ -8,13 +8,11 @@
 
 namespace Inhere\Asset\Items;
 
-use Inhere\Asset\AssetItem;
-
 /**
  * Class CssFile
  * @package Inhere\Asset\Items
  */
-final class Css extends AssetItem
+final class Css extends File
 {
     /**
      * @inheritdoc

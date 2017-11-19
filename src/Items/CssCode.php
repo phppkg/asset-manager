@@ -8,19 +8,21 @@
 
 namespace Inhere\Asset\Items;
 
-use Inhere\Asset\AssetItem;
-
 /**
  * Class CssCode
  * @package Inhere\Asset\Items
  */
-final class CssCode extends AssetItem
+final class CssCode extends Code
 {
     /**
      * @inheritdoc
      */
-    public function __construct($type, $path, $local = true, $filter = true, $attributes = null)
+    public function __construct($type, $content, $filter = true, $attributes = null)
     {
-        parent::__construct(self::CSS_CODE, $path, $local, $filter, $attributes);
+        if (!$attributes) {
+            $attributes['type'] = 'text/css';
+        }
+
+        parent::__construct(self::CSS_CODE, $content, $filter, $attributes);
     }
 }

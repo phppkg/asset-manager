@@ -8,19 +8,22 @@
 
 namespace Inhere\Asset\Items;
 
-use Inhere\Asset\AssetItem;
-
 /**
  * Class JsCode
  * @package Inhere\Asset\Items
  */
-final class JsCode extends AssetItem
+final class JsCode extends Code
 {
     /**
      * @inheritdoc
      */
-    public function __construct($type, $path, $local = true, $filter = true, $attributes = null)
+    public function __construct($type, $content, $filter = true, $attributes = null)
     {
-        parent::__construct(self::JS_CODE, $path, $local, $filter, $attributes);
+        if (!$attributes) {
+            $attributes['type'] = 'text/javascript';
+        }
+
+        parent::__construct(self::JS_CODE, $content, $filter, $attributes);
     }
 }
+

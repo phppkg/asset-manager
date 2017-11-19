@@ -8,13 +8,11 @@
 
 namespace Inhere\Asset\Items;
 
-use Inhere\Asset\AssetItem;
-
 /**
  * Class JsFile
  * @package Inhere\Asset\Items
  */
-final class Js extends AssetItem
+final class Js extends File
 {
     /**
      * @inheritdoc
