@@ -6,16 +6,22 @@
  * Time: 19:41
  */
 
-namespace Inhere\Asset\Filter;
+namespace Inhere\Asset\Filters;
 
 use Inhere\Asset\Interfaces\FilterInterface;
 
 /**
- * Class JsMinify
- * @package Inhere\Asset\Filter
+ * Class CssMinify
+ * @package Inhere\Asset\Filters
  */
-class JsMinify implements FilterInterface
+class CssMinify implements FilterInterface
 {
+    // private $minifier;
+
+    public function __construct()
+    {
+        // $this->minifier = new Minify\CSS();
+    }
 
     /**
      * @param string $content

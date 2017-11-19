@@ -3,19 +3,20 @@
  * Created by PhpStorm.
  * User: Inhere
  * Date: 2017/11/18 0018
- * Time: 19:37
+ * Time: 19:41
  */
 
-namespace Inhere\Asset\Filter;
+namespace Inhere\Asset\Filters;
 
 use Inhere\Asset\Interfaces\FilterInterface;
 
 /**
- * Class NullFilter
- * @package Inhere\Asset\Filter
+ * Class JsMinify
+ * @package Inhere\Asset\Filters
  */
-class NullFilter implements FilterInterface
+class JsMinify implements FilterInterface
 {
+
     /**
      * @param string $content
      * @return string

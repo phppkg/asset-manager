@@ -9,12 +9,18 @@
 namespace Inhere\Asset;
 
 use Inhere\Asset\Interfaces\AssetBagInterface;
+use Inhere\Asset\Interfaces\AssetItemInterface;
+use Inhere\Asset\Interfaces\ManagerInterface;
+use Inhere\Asset\Items\Css;
+use Inhere\Asset\Items\CssCode;
+use Inhere\Asset\Items\Js;
+use Inhere\Asset\Items\JsCode;
 
 /**
  * Class AssetManager
  * @package Inhere\Asset
  */
-class AssetManager
+class AssetManager implements ManagerInterface
 {
     /**
      * @var array
@@ -33,6 +39,47 @@ class AssetManager
     public function __construct(array $options = [])
     {
         $this->options = $options;
+    }
+
+    /**
+     * @param string $path
+     * @param bool $local
+     * @param bool $filter
+     * @param null|array $attributes
+     * @return $this
+     */
+    public function addCss(string $path, $local = true, $filter = true, array $attributes = null)
+    {
+        return $this->addItemByType(AssetItem::CSS, new Css($path, $local, $filter, $attributes));
+    }
+
+    public function addCssCode(string $content, $filter = true, $attributes = null)
+    {
+        return $this->addItemByType(AssetItem::CSS_CODE, new CssCode($content, $filter, $attributes));
+    }
+
+    public function addJs(string $path, $local = true, $filter = true, array $attributes = null)
+    {
+        return $this->addItemByType(AssetItem::JS, new Js($path, $local, $filter, $attributes));
+    }
+
+    public function addJsCode(string $content, $filter = true, array $attributes = null)
+    {
+        return $this->addItemByType(AssetItem::JS_CODE, new JsCode($content, $filter, $attributes));
+    }
+
+    /**
+     * @param string $type
+     * @param AssetItemInterface $item
+     * @return $this
+     */
+    public function addItemByType(string $type, AssetItemInterface $item)
+    {
+        $bag = $this->newBag($type);
+
+        $bag->add($item);
+
+        return $this;
     }
 
     /**

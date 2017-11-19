@@ -3,26 +3,19 @@
  * Created by PhpStorm.
  * User: Inhere
  * Date: 2017/11/18 0018
- * Time: 19:41
+ * Time: 19:37
  */
 
-namespace Inhere\Asset\Filter;
+namespace Inhere\Asset\Filters;
 
 use Inhere\Asset\Interfaces\FilterInterface;
 
 /**
- * Class CssMinify
- * @package Inhere\Asset\Filter
+ * Class NullFilter
+ * @package Inhere\Asset\Filters
  */
-class CssMinify implements FilterInterface
+class NullFilter implements FilterInterface
 {
-    // private $minifier;
-
-    public function __construct()
-    {
-        // $this->minifier = new Minify\CSS();
-    }
-
     /**
      * @param string $content
      * @return string

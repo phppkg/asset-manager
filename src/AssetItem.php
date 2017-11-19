@@ -81,9 +81,9 @@ abstract class AssetItem implements AssetItemInterface
      * @param bool $filter
      * @return $this
      */
-    public function setFilter(bool $filter)
+    public function setFilter($filter)
     {
-        $this->filter = $filter;
+        $this->filter = (bool)$filter;
 
         return $this;
     }
@@ -97,10 +97,10 @@ abstract class AssetItem implements AssetItemInterface
     }
 
     /**
-     * @param array|null $attributes
+     * @param array $attributes
      * @return $this
      */
-    public function setAttributes($attributes)
+    public function setAttributes(array $attributes)
     {
         $this->attributes = $attributes;
 

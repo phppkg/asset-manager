@@ -9,7 +9,12 @@
 namespace Inhere\Asset;
 
 use Inhere\Asset\Interfaces\AssetBagInterface;
+use Inhere\Asset\Interfaces\AssetItemInterface;
+use Inhere\Asset\Interfaces\FilterInterface;
 use Inhere\Asset\Items\Css;
+use Inhere\Asset\Items\CssCode;
+use Inhere\Asset\Items\Js;
+use Inhere\Asset\Items\JsCode;
 
 /**
  * Class AssetBag
@@ -53,6 +58,12 @@ class AssetBag implements AssetBagInterface, \Countable, \Iterator
     protected $merged = false;
 
     /**
+     * The item keys list
+     * @var array
+     */
+    private $keys;
+
+    /**
      * @var array
      */
     protected $items = [];
@@ -67,16 +78,16 @@ class AssetBag implements AssetBagInterface, \Countable, \Iterator
      */
     protected $filters = [];
 
+    /** @var bool */
+    private $atLocal;
+
     /**
      * @var array
      */
-    protected $attributes = [];
+    private $attributes = [];
 
     /** @var int */
     private $index;
-
-    /** @var array */
-    private $itemKeys;
 
     /**
      * AssetBag constructor.
@@ -87,43 +98,102 @@ class AssetBag implements AssetBagInterface, \Countable, \Iterator
         if ($name) {
             $this->setName($name);
         }
+
+        $this->keys = [];
     }
 
-    public function addCss(string $path, $atLocal = true, $filter = true, $attributes = null)
+    /**
+     * @param string $path
+     * @param null|bool $atLocal
+     * @param bool $filter
+     * @param array|null $attributes
+     * @return $this
+     */
+    public function addCss(string $path, $atLocal = null, $filter = true, array $attributes = null)
     {
+        $atLocal = $atLocal ?? $this->atLocal;
+        $attributes = $attributes ?: $this->attributes;
+
         return $this->add(new Css($path, $atLocal, $filter, $attributes));
     }
 
-    public function addCssCode(string $content, $atLocal = true, $filter = true, $attributes = null)
+    /**
+     * @param string $content
+     * @param bool $filter
+     * @param array|null $attributes
+     * @return $this
+     */
+    public function addCssCode(string $content, $filter = true, array $attributes = null)
     {
-        return $this->addItem(AssetItem::CSS, $path, $atLocal, $filter, $attributes);
+        $attributes = $attributes ?: $this->attributes;
+
+        return $this->add(new CssCode($content, $filter, $attributes));
     }
 
-    public function add(AssetItem $item)
+    /**
+     * @param string $path
+     * @param null|bool $atLocal
+     * @param bool $filter
+     * @param array|null $attributes
+     * @return $this
+     */
+    public function addJs(string $path, $atLocal = true, $filter = true, array $attributes = null)
     {
-        return $this->addItem($item);
+        $atLocal = $atLocal ?? $this->atLocal;
+        $attributes = $attributes ?: $this->attributes;
+
+        return $this->add(new Js($path, $atLocal, $filter, $attributes));
     }
 
-    public function addItem(AssetItem $item)
+    /**
+     * @param string $content
+     * @param bool $filter
+     * @param array|null $attributes
+     * @return $this
+     */
+    public function addJsCode(string $content, $filter = true, array $attributes = null)
+    {
+        $attributes = $attributes ?: $this->attributes;
+
+        return $this->add(new JsCode($content, $filter, $attributes));
+    }
+
+    /**
+     * @param AssetItemInterface $item
+     * @return $this
+     */
+    public function add(AssetItemInterface $item)
     {
         if (!$this->has($item)) {
-            if ($item instanceof AssetItem) {
+            if ($item instanceof AssetItemInterface) {
                 $this->items[] = $item;
             } else {
                 $this->codes[] = $item;
             }
+
+            // save item key
+            $this->keys[$item->getKey()] = true;
         }
 
         return $this;
     }
 
     /**
-     * @param AssetItem $item
+     * @param AssetItemInterface $item
+     * @return $this
+     */
+    public function addItem(AssetItemInterface $item)
+    {
+        return $this->add($item);
+    }
+
+    /**
+     * @param AssetItemInterface $item
      * @return bool
      */
-    public function has(AssetItem $item)
+    public function has(AssetItemInterface $item)
     {
-        return \in_array($item->getKey(), $this->itemKeys, true);
+        return isset($this->keys[$item->getKey()]);
     }
 
     /**
@@ -133,6 +203,17 @@ class AssetBag implements AssetBagInterface, \Countable, \Iterator
     public function merge($merge = true)
     {
         $this->merged = (bool)$merge;
+
+        return $this;
+    }
+
+    /**
+     * @param FilterInterface $filter
+     * @return $this
+     */
+    public function addFilter(FilterInterface $filter)
+    {
+        $this->filters[] = $filter;
 
         return $this;
     }
@@ -279,5 +360,24 @@ class AssetBag implements AssetBagInterface, \Countable, \Iterator
     public function getIndex(): int
     {
         return $this->index;
+    }
+
+    /**
+     * @return array
+     */
+    public function getFilters(): array
+    {
+        return $this->filters;
+    }
+
+    /**
+     * @param array $filters
+     * @return $this
+     */
+    public function setFilters(array $filters)
+    {
+        $this->filters = $filters;
+
+        return $this;
     }
 }
