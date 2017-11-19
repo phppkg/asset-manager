@@ -14,5 +14,9 @@ namespace Inhere\Asset\Interfaces;
  */
 interface AssetItemInterface
 {
-
+    /**
+     * Get the resource's key.
+     * @return string
+     */
+    public function getKey();
 }
