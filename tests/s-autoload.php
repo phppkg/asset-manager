@@ -11,12 +11,17 @@ date_default_timezone_set('Asia/Shanghai');
 
 spl_autoload_register(function($class)
 {
-    if (0 === strpos($class,'Inhere\Asset\\')) {
+    $file = null;
+
+    if (0 === strpos($class,'Inhere\Asset\Tests\\')) {
+        $path = str_replace('\\', '/', substr($class, strlen('Inhere\Asset\Tests\\')));
+        $file = dirname(__DIR__) . "/tests/{$path}.php";
+    } elseif (0 === strpos($class,'Inhere\Asset\\')) {
         $path = str_replace('\\', '/', substr($class, strlen('Inhere\Asset\\')));
         $file = dirname(__DIR__) . "/src/{$path}.php";
+    }
 
-        if (is_file($file)) {
-            include $file;
-        }
+    if ($file && is_file($file)) {
+        include $file;
     }
 });

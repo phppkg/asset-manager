@@ -99,7 +99,7 @@ class AssetManager implements ManagerInterface
     {
         /** @noinspection ExceptionsAnnotatingAndHandlingInspection */
         if (!$bag = $this->getBag($name)) {
-            $bag = new AssetBag();
+            $bag = new AssetBag($name);
 
             $this->bags[$name] = $bag;
         }
