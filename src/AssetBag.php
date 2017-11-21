@@ -380,4 +380,25 @@ class AssetBag implements AssetBagInterface, \Countable, \Iterator
 
         return $this;
     }
+
+    /**
+     * @return array
+     */
+    public function getItems(): array
+    {
+        return $this->items;
+    }
+
+    /**
+     * @param array $items
+     * @return $this
+     */
+    public function setItems(array $items)
+    {
+        foreach ($items as $item) {
+            $this->addItem($item);
+        }
+
+        return $this;
+    }
 }

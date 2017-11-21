@@ -32,7 +32,8 @@ class AssetManagerTest extends TestCase
     {
         $am = $this->createManager();
 
-        $am->addCss('css/app.css');
+        $am->addCss('assets/app.css');
+        $am->addCss('https://cdn.bootcss.com/pure/1.0.0/grids-core-min.css');
 
         $this->assertTrue($am->has('css'));
         $this->assertEquals(null, $am->get('no-exists'));
@@ -47,7 +48,7 @@ class AssetManagerTest extends TestCase
         $this->expectException(\RuntimeException::class);
         $am->get('no-exist', true);
 
-        $am->addJs('js/app.js');
+        $am->addJs('assets/app.js');
         $this->assertTrue($am->has('js'));
     }
 }

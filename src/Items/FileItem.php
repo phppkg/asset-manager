@@ -11,10 +11,10 @@ namespace Inhere\Asset\Items;
 use Inhere\Asset\AssetItem;
 
 /**
- * Class File
+ * Class FileItem
  * @package Inhere\Asset\Items
  */
-class File extends AssetItem
+class FileItem extends AssetItem
 {
     /**
      * @var string

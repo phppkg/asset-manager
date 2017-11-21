@@ -13,6 +13,7 @@ use Inhere\Asset\Interfaces\AssetItemInterface;
 use Inhere\Asset\Interfaces\ManagerInterface;
 use Inhere\Asset\Items\Css;
 use Inhere\Asset\Items\CssCode;
+use Inhere\Asset\Items\FileItem;
 use Inhere\Asset\Items\Js;
 use Inhere\Asset\Items\JsCode;
 
@@ -22,6 +23,9 @@ use Inhere\Asset\Items\JsCode;
  */
 class AssetManager implements ManagerInterface
 {
+    const TYPE_CSS = 'css';
+    const TYPE_JS = 'js';
+
     /**
      * @var array
      */
@@ -185,6 +189,43 @@ class AssetManager implements ManagerInterface
     {
         return isset($this->bags[$name]);
     }
+
+    /**
+     * ```php
+     * $items = $bag->getItems();
+     * ```
+     * @param AssetBag $bag
+     * @param string $type
+     * @return \Generator
+     */
+    public function collectItemsByType(AssetBag $bag, string $type)
+    {
+        /** @var AssetItem $item */
+        foreach ($bag->getItems() as $item) {
+            if ($item->getType() === $type) {
+                yield $item;
+            }
+        }
+    }
+
+    public function outputJs($bagName = null)
+    {
+
+    }
+
+    public function output(AssetBag $bag, string $type, callable $callback)
+    {
+        /** @var FileItem $file */
+        foreach ($bag as $file) {
+            $file->getPath();
+        }
+
+        /** @var FileItem $file */
+        foreach ($this->collectItemsByType($bag, $type) as $file) {
+            $file->getPath();
+        }
+    }
+
 
     /**
      * @return AssetBag[]

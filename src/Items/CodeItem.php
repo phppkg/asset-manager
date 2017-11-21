@@ -12,10 +12,10 @@ namespace Inhere\Asset\Items;
 use Inhere\Asset\AssetItem;
 
 /**
- * Class Code
+ * Class CodeItem
  * @package Inhere\Asset\Items
  */
-class Code extends AssetItem
+class CodeItem extends AssetItem
 {
     /**
      * @var string

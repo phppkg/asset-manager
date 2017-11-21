@@ -12,7 +12,7 @@ namespace Inhere\Asset\Items;
  * Class CssFile
  * @package Inhere\Asset\Items
  */
-final class Css extends File
+final class Css extends FileItem
 {
     /**
      * @inheritdoc
