@@ -51,6 +51,42 @@ abstract class AssetItem implements AssetItemInterface
     }
 
     /**
+     * @param bool $wrapperTag
+     * @return string
+     */
+    public function toString($wrapperTag = true)
+    {
+        return '';
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->toString();
+    }
+
+    /**
+     * @param bool $toString
+     * @return array|string
+     */
+    public function buildAttributes($toString = true)
+    {
+        $attrs = [];
+
+        foreach ($this->getAttributes() as $k => $val) {
+            $attrs[] = $k . '="' . $val . '"';
+        }
+
+        if ($toString) {
+            return $attrs ? implode(' ', $attrs) : '';
+        }
+
+        return $attrs;
+    }
+
+    /**
      * @return string
      */
     public function getType(): string

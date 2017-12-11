@@ -29,6 +29,15 @@ git clone https://github.com/inhere/php-asset-manager.git // github
 
 ## 快速开始
 
+## php 输出资源
+
+```php
+$router = new \Inhere\Route\ORouter;
+$router->get('/assets/(css|js)/([\w.-]+)\.(css|js)', AssetController::class . '@output', [
+
+]);
+```
+
 ## License
 
 MIT

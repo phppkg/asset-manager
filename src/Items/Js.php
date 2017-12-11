@@ -21,4 +21,19 @@ final class Js extends FileItem
     {
         parent::__construct(self::JS, $path, $local, $filter, $attributes);
     }
+
+    /**
+     * @param bool $wrapperTag
+     * @return string
+     */
+    public function toString($wrapperTag = true)
+    {
+        $path = $this->getPath();
+
+        if ($wrapperTag) {
+            return sprintf('<script src="%s" %s></script>', $path, $this->buildAttributes());
+        }
+
+        return $path;
+    }
 }

@@ -30,13 +30,25 @@ class AssetBag implements AssetBagInterface, \Countable, \Iterator
     protected $name;
 
     /**
-     * the target Path
+     * asset bag version
+     * @var string
+     */
+    protected $version;
+
+    /**
+     * the prefix Path
+     * @var string
+     */
+    protected $prefix;
+
+    /**
+     * the target Path - The name of the final output to disk.
      * @var string
      */
     protected $targetPath;
 
     /**
-     * the target uri
+     * the target uri - The script tag is generated with this URI
      * @var string
      */
     protected $targetUri;
@@ -53,6 +65,7 @@ class AssetBag implements AssetBagInterface, \Countable, \Iterator
     protected $sourcePath;
 
     /**
+     * Join all the resources in a single file
      * @var bool
      */
     protected $merged = false;
@@ -400,5 +413,45 @@ class AssetBag implements AssetBagInterface, \Countable, \Iterator
         }
 
         return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPrefix(): string
+    {
+        return $this->prefix;
+    }
+
+    /**
+     * @param string $prefix
+     *
+     * ```php
+     * if (APP_ENV === 'dev') {
+     *      $footerBag->setPrefix('/');
+     * } else {
+     *      $footerBag->setPrefix('http:://cdn.example.com/');
+     * }
+     * ```
+     */
+    public function setPrefix(string $prefix)
+    {
+        $this->prefix = $prefix;
+    }
+
+    /**
+     * @return string
+     */
+    public function getVersion(): string
+    {
+        return $this->version;
+    }
+
+    /**
+     * @param string $version
+     */
+    public function setVersion(string $version)
+    {
+        $this->version = $version;
     }
 }

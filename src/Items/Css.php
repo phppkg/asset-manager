@@ -21,4 +21,23 @@ final class Css extends FileItem
     {
         parent::__construct(self::CSS, $path, $local, $filter, $attributes);
     }
+
+    /**
+     * @param bool $wrapperTag
+     * @return string
+     */
+    public function toString($wrapperTag = true)
+    {
+        $path = $this->getPath();
+
+        if ($wrapperTag) {
+            return sprintf(
+                '<link href="%s" rel="stylesheet" %s>',
+                $path,
+                $this->buildAttributes()
+            );
+        }
+
+        return $path;
+    }
 }

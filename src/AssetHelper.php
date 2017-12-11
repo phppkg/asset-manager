@@ -31,18 +31,18 @@ class AssetHelper
      * Minify & gzip the data & (optionally) saves it to a file.
      *
      * @param string $content
-     * @param string $path Path to write the data to
+     * @param string $saveTo Path to write the data to
      * @param int $level Compression level, from 0 to 9
      * @return string The minified & gzipped data
      */
-    public static function gzip($content, $path = null, $level = 9)
+    public static function gzip($content, $saveTo = null, $level = 9)
     {
         // $content = $this->execute($path);
-        $content = gzencode($content, $level, FORCE_GZIP);
+        $content = gzencode($content, $level);
 
         // save to path
-        if ($path !== null) {
-            file_put_contents($path, $content);
+        if ($saveTo !== null) {
+            file_put_contents($saveTo, $content);
         }
 
         return $content;

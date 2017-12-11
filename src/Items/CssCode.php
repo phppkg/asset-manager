@@ -25,4 +25,19 @@ final class CssCode extends CodeItem
 
         parent::__construct(self::CSS_CODE, $content, $filter, $attributes);
     }
+
+    /**
+     * @param bool $wrapperTag
+     * @return string
+     */
+    public function toString($wrapperTag = true)
+    {
+        $content = $this->getContent();
+
+        if ($wrapperTag) {
+            return sprintf('<style %s>%s</style>', $this->buildAttributes(), $content);
+        }
+
+        return $content;
+    }
 }

@@ -36,6 +36,11 @@ class AssetManager implements ManagerInterface
      */
     private $bags = [];
 
+    /** @var array */
+    private $uri2names = [
+        // '/css/app.css' => 'css',
+    ];
+
     /**
      * AssetManager constructor.
      * @param array $options
@@ -57,16 +62,35 @@ class AssetManager implements ManagerInterface
         return $this->addItemByType(AssetItem::CSS, new Css($path, $local, $filter, $attributes));
     }
 
+    /**
+     * @param string $content
+     * @param bool $filter
+     * @param null|array $attributes
+     * @return $this
+     */
     public function addCssCode(string $content, $filter = true, $attributes = null)
     {
         return $this->addItemByType(AssetItem::CSS_CODE, new CssCode($content, $filter, $attributes));
     }
 
+    /**
+     * @param string $path
+     * @param bool $local
+     * @param bool $filter
+     * @param null|array $attributes
+     * @return $this
+     */
     public function addJs(string $path, $local = true, $filter = true, array $attributes = null)
     {
         return $this->addItemByType(AssetItem::JS, new Js($path, $local, $filter, $attributes));
     }
 
+    /**
+     * @param string $content
+     * @param bool $filter
+     * @param null|array $attributes
+     * @return $this
+     */
     public function addJsCode(string $content, $filter = true, array $attributes = null)
     {
         return $this->addItemByType(AssetItem::JS_CODE, new JsCode($content, $filter, $attributes));
@@ -213,6 +237,11 @@ class AssetManager implements ManagerInterface
 
     }
 
+    /**
+     * @param AssetBag $bag
+     * @param string $type
+     * @param callable $callback The path callback handler
+     */
     public function output(AssetBag $bag, string $type, callable $callback)
     {
         /** @var FileItem $file */
@@ -224,8 +253,32 @@ class AssetManager implements ManagerInterface
         foreach ($this->collectItemsByType($bag, $type) as $file) {
             $file->getPath();
         }
+
+        $callback($this);
     }
 
+    public function getLinks(AssetBag $bag, $wrapperTag = true)
+    {
+
+    }
+
+    public function getScripts(AssetBag $bag, $wrapperTag = true)
+    {
+
+    }
+
+    /**
+     * @param string $name
+     * @return string
+     */
+    public function findName($name)
+    {
+        if (isset($this->uri2names[$name])) {
+            $name = $this->uri2names[$name];
+        }
+
+        return $name;
+    }
 
     /**
      * @return AssetBag[]
@@ -257,5 +310,21 @@ class AssetManager implements ManagerInterface
     public function setOptions(array $options)
     {
         $this->options = $options;
+    }
+
+    /**
+     * @return array
+     */
+    public function getUri2names(): array
+    {
+        return $this->uri2names;
+    }
+
+    /**
+     * @param array $uri2names
+     */
+    public function setUri2names(array $uri2names)
+    {
+        $this->uri2names = $uri2names;
     }
 }

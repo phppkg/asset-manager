@@ -25,5 +25,20 @@ final class JsCode extends CodeItem
 
         parent::__construct(self::JS_CODE, $content, $filter, $attributes);
     }
+
+    /**
+     * @param bool $wrapperTag
+     * @return string
+     */
+    public function toString($wrapperTag = true)
+    {
+        $content = $this->getContent();
+
+        if ($wrapperTag) {
+            return sprintf('<script %s>%s</script>', $this->buildAttributes(), $content);
+        }
+
+        return $content;
+    }
 }
 
