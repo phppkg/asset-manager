@@ -232,9 +232,11 @@ class AssetManager implements ManagerInterface
         }
     }
 
-    public function outputJs($bagName = null)
+    public function outputJs($bagName = null, $callback)
     {
+        $bag = $bagName ? $this->getBag($bagName, true) : $this->getJs();
 
+        return $this->output($bag, self::TYPE_JS, $callback);
     }
 
     /**
@@ -244,11 +246,6 @@ class AssetManager implements ManagerInterface
      */
     public function output(AssetBag $bag, string $type, callable $callback)
     {
-        /** @var FileItem $file */
-        foreach ($bag as $file) {
-            $file->getPath();
-        }
-
         /** @var FileItem $file */
         foreach ($this->collectItemsByType($bag, $type) as $file) {
             $file->getPath();
