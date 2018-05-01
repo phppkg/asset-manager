@@ -19,7 +19,7 @@ final class CssFile extends FileItem
      */
     public function __construct(string $path, $local = true, $filter = true, array $attributes = null)
     {
-        parent::__construct(self::CSS, $path, $local, $filter, $attributes);
+        parent::__construct(self::CSS_FILE, $path, $local, $filter, $attributes);
     }
 
     /**

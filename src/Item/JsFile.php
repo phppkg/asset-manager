@@ -19,7 +19,7 @@ final class JsFile extends FileItem
      */
     public function __construct($type, $path, $local = true, $filter = true, array $attributes = null)
     {
-        parent::__construct(self::JS, $path, $local, $filter, $attributes);
+        parent::__construct(self::JS_FILE, $path, $local, $filter, $attributes);
     }
 
     /**

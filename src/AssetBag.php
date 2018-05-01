@@ -74,9 +74,7 @@ class AssetBag implements AssetBagInterface, \Countable, \Iterator
     /** @var array */
     protected $items = [];
 
-    /**
-     * @var array
-     */
+    /** @var array */
     protected $codes = [];
 
     /** @var array */
@@ -191,6 +189,25 @@ class AssetBag implements AssetBagInterface, \Countable, \Iterator
     public function addItem(AssetItemInterface $item): self
     {
         return $this->add($item);
+    }
+
+    /**
+     * ```php
+     * $items = $bag->getFilteredItems();
+     * ```
+     * @param string|array $type
+     * @return \Generator
+     */
+    public function getFilteredItems($type)
+    {
+        $types = (array)$type;
+
+        /** @var AssetItem $item */
+        foreach ($this->getItems() as $item) {
+            if (\in_array($item->getType(), $types, true)) {
+                yield $item;
+            }
+        }
     }
 
     /**

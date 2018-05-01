@@ -14,11 +14,11 @@ namespace Inhere\Asset;
  */
 abstract class AssetItem implements AssetItemInterface
 {
-    const CSS = 'css';
     const CSS_CODE = 'cssCode';
+    const CSS_FILE = 'cssFile';
 
-    const JS = 'js';
     const JS_CODE = 'jsCode';
+    const JS_FILE = 'jsFile';
 
     /**
      * @var string

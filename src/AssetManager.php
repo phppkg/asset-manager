@@ -11,8 +11,8 @@ namespace Inhere\Asset;
 use Inhere\Asset\Item\CssFile;
 use Inhere\Asset\Item\CssCode;
 use Inhere\Asset\Item\FileItem;
-use Inhere\Asset\Item\Js;
 use Inhere\Asset\Item\JsCode;
+use Inhere\Asset\Item\JsFile;
 
 /**
  * Class AssetManager
@@ -22,6 +22,9 @@ class AssetManager implements ManagerInterface
 {
     const TYPE_CSS = 'css';
     const TYPE_JS = 'js';
+
+    const CSS_BAG = 'css';
+    const JS_BAG = 'js';
 
     /** @var array */
     private $options;
@@ -52,7 +55,7 @@ class AssetManager implements ManagerInterface
      */
     public function addCss(string $path, $local = true, $filter = true, array $attributes = null): self
     {
-        return $this->addItemByType(AssetItem::CSS, new CssFile($path, $local, $filter, $attributes));
+        return $this->addItemByType(AssetItem::CSS_FILE, new CssFile($path, $local, $filter, $attributes));
     }
 
     /**
@@ -75,7 +78,7 @@ class AssetManager implements ManagerInterface
      */
     public function addJs(string $path, $local = true, $filter = true, array $attributes = null): self
     {
-        return $this->addItemByType(AssetItem::JS, new Js($path, $local, $filter, $attributes));
+        return $this->addItemByType(AssetItem::JS_FILE, new JsFile($path, $local, $filter, $attributes));
     }
 
     /**
@@ -134,7 +137,7 @@ class AssetManager implements ManagerInterface
      */
     public function getCss(): AssetBag
     {
-        return $this->bag('css');
+        return $this->bag(self::CSS_BAG);
     }
 
     /**
@@ -143,7 +146,7 @@ class AssetManager implements ManagerInterface
      */
     public function getJs(): AssetBag
     {
-        return $this->bag('js');
+        return $this->bag(self::JS_BAG);
     }
 
     /**
@@ -212,17 +215,32 @@ class AssetManager implements ManagerInterface
      * $items = $bag->getItems();
      * ```
      * @param AssetBag $bag
-     * @param string $type
+     * @param string|array $type
      * @return \Generator
      */
-    public function collectItemsByType(AssetBag $bag, string $type)
+    public function collectItemsByType(AssetBag $bag, $type)
     {
+        $types = (array)$type;
+
         /** @var AssetItem $item */
         foreach ($bag->getItems() as $item) {
-            if ($item->getType() === $type) {
+            if (\in_array($item->getType(), $types, true)) {
                 yield $item;
             }
         }
+    }
+
+    /**
+     * @param null|string $bagName
+     * @param $callback
+     * @throws \RuntimeException
+     */
+    public function outputCss(string $bagName = null, $callback)
+    {
+        /** @var AssetBag $bag */
+        $bag = $bagName ? $this->getBag($bagName, true) : $this->getJs();
+
+        return $this->output($bag, [AssetItem::CSS_CODE, AssetItem::CSS_FILE], $callback);
     }
 
     /**
@@ -235,15 +253,15 @@ class AssetManager implements ManagerInterface
         /** @var AssetBag $bag */
         $bag = $bagName ? $this->getBag($bagName, true) : $this->getJs();
 
-        return $this->output($bag, self::TYPE_JS, $callback);
+        return $this->output($bag, [AssetItem::JS_CODE, AssetItem::JS_FILE], $callback);
     }
 
     /**
      * @param AssetBag $bag
-     * @param string $type
+     * @param string|array $type
      * @param callable $callback The path callback handler
      */
-    public function output(AssetBag $bag, string $type, callable $callback)
+    public function output(AssetBag $bag, $type, callable $callback)
     {
         /** @var FileItem $file */
         foreach ($this->collectItemsByType($bag, $type) as $file) {
