@@ -8,20 +8,17 @@
 
 namespace Inhere\Asset;
 
-use Inhere\Exceptions\FileSystemException;
-use Inhere\Exceptions\InvalidArgumentException;
-use Inhere\Library\Files\Directory;
-use Inhere\Library\Files\File;
-use Inhere\Library\Files\FileFinder;
-use Inhere\Library\Helpers\ArrayHelper;
-use Inhere\Library\StdObject;
+use Toolkit\File\Exception\FileSystemException;
+use Toolkit\File\Directory;
+use Toolkit\File\File;
+use Toolkit\File\FileFinder;
 
 /**
  * 资源发布 -- 将资源发布到可访问目录(e.g. from vendor to web dir)
  * Class AssetPublisher
  * @package Inhere\Asset
  */
-class AssetPublisher extends StdObject
+class AssetPublisher
 {
     /**
      * asset source base path
@@ -68,18 +65,13 @@ class AssetPublisher extends StdObject
 
     public function __construct(array $config = [])
     {
-        $include = ArrayHelper::remove($config, 'include', $this->defaultOptions()['include']);
-        $exclude = ArrayHelper::remove($config, 'exclude', $this->defaultOptions()['exclude']);
+        // $include = ArrayHelper::remove($config, 'include', $this->defaultOptions()['include']);
+        // $exclude = ArrayHelper::remove($config, 'exclude', $this->defaultOptions()['exclude']);
 
-        $this->finder = new FileFinder([
-            'include' => $include,
-            'exclude' => $exclude,
-        ]);
-
-        parent::__construct($config);
+        $this->finder = FileFinder::fromArray($this->defaultOptions());
     }
 
-    public function defaultOptions()
+    public function defaultOptions(): array
     {
         return [
             /**
@@ -87,24 +79,25 @@ class AssetPublisher extends StdObject
              * 比 {@see $exlude} 优先级更高
              * @var array
              */
-            'include' => [
-                'file' => ['README.md'],
-                'ext' => [
-                    'js', 'css',
-                    'ttf', 'svg', 'eot', 'woff', 'woff2',
-                    'png', 'jpg', 'jpeg', 'gif', 'ico',
-                ],
-                'dir' => [], // ['dist'],
+            'names' => [
+                // file
+                'README.md',
+                // ext match
+                '*.js', '*.css',
+                '*.ttf', '*.svg', '*.eot', '*.woff', '*.woff2',
+                '*.png', '*.jpg', '*.jpeg', '*.gif', '*.ico',
             ],
 
             /**
              * 排除发布的 文件 文件扩展匹配 目录
              * @var array
              */
-            'exclude' => [
-                'file' => ['.gitignore', 'LICENSE', 'LICENSE.txt'],
-                'ext' => ['swp', 'json'],
-                'dir' => ['.git', 'src'],
+            'exclude' => ['.git', 'src'],
+            'notNames' => [
+                // file
+                '.gitignore', 'LICENSE', 'LICENSE.txt',
+                // ext match
+                '*.swp', '*.json'
             ]
         ];
     }
@@ -113,15 +106,15 @@ class AssetPublisher extends StdObject
      * @param mixed $from
      * @param string $to
      * @return $this
-     * @throws InvalidArgumentException
+     * @throws \InvalidArgumentException
      */
-    public function add($from, $to = '')
+    public function add($from, $to = ''): self
     {
         if (!$from) {
             return $this;
         }
 
-        if (is_array($from)) {
+        if (\is_array($from)) {
             array_walk($from, function ($f, $t) {
                 $this->add($f, $t);
             });
@@ -139,7 +132,7 @@ class AssetPublisher extends StdObject
         } elseif (is_dir($fullPath)) {
             $this->publishAssets['dirs'][$fullPath] = $to;
         } else {
-            throw new InvalidArgumentException("The param must be an existing source file or dir path. Input: [$from]");
+            throw new \InvalidArgumentException("The param must be an existing source file or dir path. Input: [$from]");
         }
 
         return $this;
@@ -149,9 +142,10 @@ class AssetPublisher extends StdObject
      * target path is {@see $publishPath} + $path ( is param of the method `source($path)` )
      * @param bool|false $override
      * @return $this
-     * @throws \Inhere\Exceptions\FileSystemException
+     * @throws \Toolkit\File\Exception\FileNotFoundException
+     * @throws FileSystemException
      */
-    public function publish($override = false)
+    public function publish(bool $override = false): self
     {
         // publish files
         foreach ($this->publishAssets['files'] as $from => $to) {
@@ -175,9 +169,10 @@ class AssetPublisher extends StdObject
      * @param string $from The is full file path
      * @param string $to The is a relative path
      * @param bool|false $override
+     * @throws \Toolkit\File\Exception\FileNotFoundException
      * @throws FileSystemException
      */
-    public function publishFile($from, $to, $override = false)
+    public function publishFile(string $from, $to, $override = false)
     {
         $targetFile = Directory::isAbsPath($to) ? $to : $this->publishPath . '/' . $to;
         //$targetFile = $to . '/' . basename($from);
@@ -199,12 +194,12 @@ class AssetPublisher extends StdObject
      * @param $fromDir
      * @param $toDir
      * @param bool|false $override
-     * @throws \Inhere\Exceptions\FileSystemException
-     * @throws \Inhere\Exceptions\InvalidArgumentException
+     * @throws \Toolkit\File\Exception\FileNotFoundException
+     * @throws FileSystemException
      */
-    public function publishDir($fromDir, $toDir, $override = false)
+    public function publishDir(string $fromDir, string $toDir, $override = false)
     {
-        $files = $this->finder->findAll(1, $fromDir)->getFiles();
+        $files = $this->finder->in($fromDir);
         $toDir = Directory::isAbsPath($toDir) ? $toDir : $this->publishPath . '/' . $toDir;
 
         // publish files ...
@@ -213,7 +208,10 @@ class AssetPublisher extends StdObject
         }
     }
 
-    public function hasAssetToPublish()
+    /**
+     * @return bool
+     */
+    public function hasAssetToPublish(): bool
     {
         return 0 < \count($this->publishAssets['files']) || 0 < \count($this->publishAssets['dirs']);
     }
@@ -223,15 +221,8 @@ class AssetPublisher extends StdObject
     /**
      * @return FileFinder
      */
-    public function getFinder()
+    public function getFinder(): FileFinder
     {
-        if (!$this->finder) {
-            $this->finder = new FileFinder([
-                'include' => $this->defaultOptions()['include'],
-                'exclude' => $this->defaultOptions()['exclude'],
-            ]);
-        }
-
         return $this->finder;
     }
 
@@ -246,28 +237,28 @@ class AssetPublisher extends StdObject
     /**
      * @return string
      */
-    public function getSourcePath()
+    public function getSourcePath(): string
     {
         return $this->sourcePath;
     }
 
     /**
      * @param string $sourcePath
-     * @throws InvalidArgumentException
+     * @throws \InvalidArgumentException
      */
-    public function setSourcePath($sourcePath)
+    public function setSourcePath(string $sourcePath)
     {
-        if ($sourcePath && is_dir($sourcePath)) {
+        if ($sourcePath && \is_dir($sourcePath)) {
             $this->sourcePath = $sourcePath;
         } else {
-            throw new InvalidArgumentException('The source path must be an existing dir path. Input: ' . $sourcePath);
+            throw new \InvalidArgumentException('The source path must be an existing dir path. Input: ' . $sourcePath);
         }
     }
 
     /**
      * @return string
      */
-    public function getPublishPath()
+    public function getPublishPath(): string
     {
         return $this->publishPath;
     }
@@ -275,7 +266,7 @@ class AssetPublisher extends StdObject
     /**
      * @param string $publishPath
      */
-    public function setPublishPath($publishPath)
+    public function setPublishPath(string $publishPath)
     {
         if ($publishPath) {
             $this->publishPath = $publishPath;
@@ -285,7 +276,7 @@ class AssetPublisher extends StdObject
     /**
      * @return array
      */
-    public function getPublishedAssets()
+    public function getPublishedAssets(): array
     {
         return $this->publishedAssets;
     }
@@ -293,7 +284,7 @@ class AssetPublisher extends StdObject
     /**
      * @return array
      */
-    public function getPublishAssets()
+    public function getPublishAssets(): array
     {
         return $this->publishAssets;
     }

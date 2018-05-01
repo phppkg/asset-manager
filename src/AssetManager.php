@@ -8,14 +8,11 @@
 
 namespace Inhere\Asset;
 
-use Inhere\Asset\Interfaces\AssetBagInterface;
-use Inhere\Asset\Interfaces\AssetItemInterface;
-use Inhere\Asset\Interfaces\ManagerInterface;
-use Inhere\Asset\Items\Css;
-use Inhere\Asset\Items\CssCode;
-use Inhere\Asset\Items\FileItem;
-use Inhere\Asset\Items\Js;
-use Inhere\Asset\Items\JsCode;
+use Inhere\Asset\Item\Css;
+use Inhere\Asset\Item\CssCode;
+use Inhere\Asset\Item\FileItem;
+use Inhere\Asset\Item\Js;
+use Inhere\Asset\Item\JsCode;
 
 /**
  * Class AssetManager
@@ -26,9 +23,7 @@ class AssetManager implements ManagerInterface
     const TYPE_CSS = 'css';
     const TYPE_JS = 'js';
 
-    /**
-     * @var array
-     */
+    /**  @var array */
     private $options;
 
     /**
@@ -57,7 +52,7 @@ class AssetManager implements ManagerInterface
      * @param null|array $attributes
      * @return $this
      */
-    public function addCss(string $path, $local = true, $filter = true, array $attributes = null)
+    public function addCss(string $path, $local = true, $filter = true, array $attributes = null): self
     {
         return $this->addItemByType(AssetItem::CSS, new Css($path, $local, $filter, $attributes));
     }
@@ -68,7 +63,7 @@ class AssetManager implements ManagerInterface
      * @param null|array $attributes
      * @return $this
      */
-    public function addCssCode(string $content, $filter = true, $attributes = null)
+    public function addCssCode(string $content, $filter = true, $attributes = null): self
     {
         return $this->addItemByType(AssetItem::CSS_CODE, new CssCode($content, $filter, $attributes));
     }
@@ -80,7 +75,7 @@ class AssetManager implements ManagerInterface
      * @param null|array $attributes
      * @return $this
      */
-    public function addJs(string $path, $local = true, $filter = true, array $attributes = null)
+    public function addJs(string $path, $local = true, $filter = true, array $attributes = null): self
     {
         return $this->addItemByType(AssetItem::JS, new Js($path, $local, $filter, $attributes));
     }
@@ -91,7 +86,7 @@ class AssetManager implements ManagerInterface
      * @param null|array $attributes
      * @return $this
      */
-    public function addJsCode(string $content, $filter = true, array $attributes = null)
+    public function addJsCode(string $content, $filter = true, array $attributes = null): self
     {
         return $this->addItemByType(AssetItem::JS_CODE, new JsCode($content, $filter, $attributes));
     }
@@ -101,7 +96,7 @@ class AssetManager implements ManagerInterface
      * @param AssetItemInterface $item
      * @return $this
      */
-    public function addItemByType(string $type, AssetItemInterface $item)
+    public function addItemByType(string $type, AssetItemInterface $item): self
     {
         $bag = $this->newBag($type);
 
@@ -139,7 +134,7 @@ class AssetManager implements ManagerInterface
      * the default css bag.
      * @return AssetBag
      */
-    public function getCss()
+    public function getCss(): AssetBag
     {
         return $this->bag('css');
     }
@@ -148,7 +143,7 @@ class AssetManager implements ManagerInterface
      * the default js bag.
      * @return AssetBag
      */
-    public function getJs()
+    public function getJs(): AssetBag
     {
         return $this->bag('js');
     }
@@ -186,7 +181,7 @@ class AssetManager implements ManagerInterface
      * @param AssetBagInterface $bag
      * @return $this
      */
-    public function setBag(string $name, AssetBagInterface $bag)
+    public function setBag(string $name, AssetBagInterface $bag): self
     {
         $this->bags[$name] = $bag;
 
@@ -198,7 +193,7 @@ class AssetManager implements ManagerInterface
      * @param AssetBagInterface $bag
      * @return $this
      */
-    public function set(string $name, AssetBagInterface $bag)
+    public function set(string $name, AssetBagInterface $bag): self
     {
         $this->bags[$name] = $bag;
 
@@ -209,7 +204,7 @@ class AssetManager implements ManagerInterface
      * @param string $name
      * @return bool
      */
-    public function has(string $name)
+    public function has(string $name): bool
     {
         return isset($this->bags[$name]);
     }
@@ -232,8 +227,14 @@ class AssetManager implements ManagerInterface
         }
     }
 
-    public function outputJs($bagName = null, $callback)
+    /**
+     * @param null|string $bagName
+     * @param $callback
+     * @throws \RuntimeException
+     */
+    public function outputJs(string $bagName = null, $callback)
     {
+        /** @var AssetBag $bag */
         $bag = $bagName ? $this->getBag($bagName, true) : $this->getJs();
 
         return $this->output($bag, self::TYPE_JS, $callback);
@@ -268,7 +269,7 @@ class AssetManager implements ManagerInterface
      * @param string $name
      * @return string
      */
-    public function findName($name)
+    public function findName(string $name): string
     {
         if (isset($this->uri2names[$name])) {
             $name = $this->uri2names[$name];

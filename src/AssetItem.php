@@ -8,8 +8,6 @@
 
 namespace Inhere\Asset;
 
-use Inhere\Asset\Interfaces\AssetItemInterface;
-
 /**
  * Class AssetItem
  * @package Inhere\Asset
@@ -54,7 +52,7 @@ abstract class AssetItem implements AssetItemInterface
      * @param bool $wrapperTag
      * @return string
      */
-    public function toString($wrapperTag = true)
+    public function toString($wrapperTag = true): string
     {
         return '';
     }
@@ -80,7 +78,7 @@ abstract class AssetItem implements AssetItemInterface
         }
 
         if ($toString) {
-            return $attrs ? implode(' ', $attrs) : '';
+            return $attrs ? \implode(' ', $attrs) : '';
         }
 
         return $attrs;
@@ -98,7 +96,7 @@ abstract class AssetItem implements AssetItemInterface
      * @param string $type
      * @return $this
      */
-    public function setType(string $type)
+    public function setType(string $type): self
     {
         $this->type = $type;
 
@@ -117,7 +115,7 @@ abstract class AssetItem implements AssetItemInterface
      * @param bool $filter
      * @return $this
      */
-    public function setFilter($filter)
+    public function setFilter($filter): self
     {
         $this->filter = (bool)$filter;
 
@@ -136,7 +134,7 @@ abstract class AssetItem implements AssetItemInterface
      * @param array $attributes
      * @return $this
      */
-    public function setAttributes(array $attributes)
+    public function setAttributes(array $attributes): self
     {
         $this->attributes = $attributes;
 

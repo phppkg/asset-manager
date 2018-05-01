@@ -6,13 +6,13 @@
  * Time: 17:57
  */
 
-namespace Inhere\Asset\Items;
+namespace Inhere\Asset\Item;
 
 use Inhere\Asset\AssetItem;
 
 /**
  * Class FileItem
- * @package Inhere\Asset\Items
+ * @package Inhere\Asset\Item
  */
 class FileItem extends AssetItem
 {
@@ -53,7 +53,7 @@ class FileItem extends AssetItem
      * Get the resource's key.
      * @return string
      */
-    public function getKey()
+    public function getKey(): string
     {
         if (!$this->key) {
             $key = $this->getType() . ':' . $this->getPath();
@@ -75,7 +75,7 @@ class FileItem extends AssetItem
      * @param string $path
      * @return $this
      */
-    public function setPath(string $path)
+    public function setPath(string $path): self
     {
         $this->path = $path;
 
@@ -94,7 +94,7 @@ class FileItem extends AssetItem
      * @param bool $local
      * @return $this
      */
-    public function setLocal($local)
+    public function setLocal($local): self
     {
         $this->local = (bool)$local;
 

@@ -6,14 +6,13 @@
  * Time: 18:02
  */
 
-namespace Inhere\Asset\Items;
-
+namespace Inhere\Asset\Item;
 
 use Inhere\Asset\AssetItem;
 
 /**
  * Class CodeItem
- * @package Inhere\Asset\Items
+ * @package Inhere\Asset\Item
  */
 class CodeItem extends AssetItem
 {
@@ -47,7 +46,7 @@ class CodeItem extends AssetItem
      * Get the resource's key.
      * @return string
      */
-    public function getKey()
+    public function getKey(): string
     {
         if (!$this->key) {
             $key = $this->getType() . ':' . $this->getContent();

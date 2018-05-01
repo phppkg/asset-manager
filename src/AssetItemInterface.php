@@ -6,11 +6,11 @@
  * Time: 21:13
  */
 
-namespace Inhere\Asset\Interfaces;
+namespace Inhere\Asset;
 
 /**
  * Interface AssetItemInterface
- * @package Inhere\Asset\Interfaces
+ * @package Inhere\Asset
  */
 interface AssetItemInterface
 {
@@ -18,7 +18,7 @@ interface AssetItemInterface
      * Get the resource's key.
      * @return string
      */
-    public function getKey();
+    public function getKey(): string ;
 
     /**
      * @return string
@@ -27,7 +27,7 @@ interface AssetItemInterface
 
     /**
      * @param string $type
-     * @return $this
+     * @return $this|mixed
      */
     public function setType(string $type);
 
@@ -38,7 +38,7 @@ interface AssetItemInterface
 
     /**
      * @param bool $filter
-     * @return $this
+     * @return $this|mixed
      */
     public function setFilter($filter);
 
@@ -49,7 +49,7 @@ interface AssetItemInterface
 
     /**
      * @param array $attributes
-     * @return $this
+     * @return $this|mixed
      */
     public function setAttributes(array $attributes);
 }

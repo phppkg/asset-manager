@@ -6,11 +6,11 @@
  * Time: 9:46
  */
 
-namespace Inhere\Asset\Utils;
+namespace Inhere\Asset\Util;
 
 /**
  * Class Css2InlineStyle
- * @package Inhere\Asset\Utils
+ * @package Inhere\Asset\Util
  *
  * ```php
  * $cis = new Css2InlineStyle;

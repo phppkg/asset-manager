@@ -6,11 +6,11 @@
  * Time: 19:38
  */
 
-namespace Inhere\Asset\Interfaces;
+namespace Inhere\Asset;
 
 /**
  * Interface FilterInterface
- * @package Inhere\Asset\Interfaces
+ * @package Inhere\Asset
  */
 interface FilterInterface
 {

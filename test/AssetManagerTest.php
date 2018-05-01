@@ -2,7 +2,7 @@
 
 namespace Inhere\Asset\Tests;
 
-use Inhere\Asset\Interfaces\AssetBagInterface;
+use Inhere\Asset\AssetBagInterface;
 use PHPUnit\Framework\TestCase;
 use Inhere\Asset\AssetManager;
 

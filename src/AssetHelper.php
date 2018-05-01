@@ -35,14 +35,14 @@ class AssetHelper
      * @param int $level Compression level, from 0 to 9
      * @return string The minified & gzipped data
      */
-    public static function gzip($content, $saveTo = null, $level = 9)
+    public static function gzip(string $content, string $saveTo = null, int $level = 9): string
     {
         // $content = $this->execute($path);
-        $content = gzencode($content, $level);
+        $content = \gzencode($content, $level);
 
         // save to path
         if ($saveTo !== null) {
-            file_put_contents($saveTo, $content);
+            \file_put_contents($saveTo, $content);
         }
 
         return $content;
@@ -52,54 +52,54 @@ class AssetHelper
      * @param $file
      * @return bool
      */
-    public static function isCss($file)
+    public static function isCss($file): bool
     {
-        return 1 === preg_match(static::$patterns['css'], trim($file));
+        return 1 === \preg_match(static::$patterns['css'], trim($file));
     }
 
     /**
      * @param $file
      * @return bool
      */
-    public static function isJs($file)
+    public static function isJs($file): bool
     {
-        return 1 === preg_match(static::$patterns['js'], trim($file));
+        return 1 === \preg_match(static::$patterns['js'], trim($file));
     }
 
     /**
      * @param $file
      * @return bool
      */
-    public static function isCssOrJs($file)
+    public static function isCssOrJs($file): bool
     {
-        return 1 === preg_match(static::$patterns['cssJs'], trim($file));
+        return 1 === \preg_match(static::$patterns['cssJs'], trim($file));
     }
 
     /**
      * @param $file
      * @return bool
      */
-    public static function isMinCssOrJs($file)
+    public static function isMinCssOrJs($file): bool
     {
-        return 1 === preg_match(static::$patterns['min'], trim($file));
+        return 1 === \preg_match(static::$patterns['min'], trim($file));
     }
 
     /**
      * @param $file
      * @return bool
      */
-    public static function isFont($file)
+    public static function isFont($file): bool
     {
-        return 1 === preg_match(static::$patterns['font'], trim($file));
+        return 1 === \preg_match(static::$patterns['font'], trim($file));
     }
 
     /**
      * @param $file
      * @return bool
      */
-    public static function isImage($file)
+    public static function isImage($file): bool
     {
-        return 1 === preg_match(static::$patterns['img'], trim($file));
+        return 1 === \preg_match(static::$patterns['img'], trim($file));
     }
 
 }

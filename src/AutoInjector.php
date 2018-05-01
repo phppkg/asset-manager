@@ -24,6 +24,11 @@ class AutoInjector
     protected $endNode = '</body>';
 
     /**
+     * @var array
+     */
+    private $assets = [];
+
+    /**
      * 自动注入资源到指定的位置
      * - 在渲染好html后,输出html字符之前调用此方法
      * `$html = $manager->injectAssets($html);`
@@ -40,8 +45,8 @@ class AutoInjector
 
         if (!empty($assets[self::POS_BODY])) {
             $assetBody = $this->bodyNode . implode('', $assets[self::POS_BODY]);
-            $bodyNode = str_replace('/', '\/', $this->bodyNode);
-            $html = preg_replace("/$bodyNode/i", $assetBody, $html, 1, $count);
+            $bodyNode = \str_replace('/', '\/', $this->bodyNode);
+            $html = \preg_replace("/$bodyNode/i", $assetBody, $html, 1, $count);
 
             // 没找到节点，注入失败时，直接加入开始位置
             if ($count === 0) {
@@ -50,9 +55,9 @@ class AutoInjector
         }
 
         if (!empty($assets[self::POS_HEAD])) {
-            $assetHead = implode('', $assets[self::POS_HEAD]) . $this->headNode;
-            $headNode = str_replace('/', '\/', $this->headNode);
-            $html = preg_replace("/$headNode/i", $assetHead, $html, 1, $count);
+            $assetHead = \implode('', $assets[self::POS_HEAD]) . $this->headNode;
+            $headNode = \str_replace('/', '\/', $this->headNode);
+            $html = \preg_replace("/$headNode/i", $assetHead, $html, 1, $count);
 
             if ($count === 0) {
                 $html = $assetHead . $html;
@@ -60,9 +65,9 @@ class AutoInjector
         }
 
         if (!empty($assets[self::POS_END])) {
-            $assetEnd = implode('', $assets[self::POS_END]) . $this->endNode;
-            $endNode = str_replace('/', '\/', $this->endNode);
-            $html = preg_replace("/$endNode/i", $assetEnd, $html, 1, $count);
+            $assetEnd = \implode('', $assets[self::POS_END]) . $this->endNode;
+            $endNode = \str_replace('/', '\/', $this->endNode);
+            $html = \preg_replace("/$endNode/i", $assetEnd, $html, 1, $count);
 
             // 没找到节点，注入失败时，直接加入末尾位置
             if ($count === 0) {

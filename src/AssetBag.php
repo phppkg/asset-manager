@@ -8,13 +8,10 @@
 
 namespace Inhere\Asset;
 
-use Inhere\Asset\Interfaces\AssetBagInterface;
-use Inhere\Asset\Interfaces\AssetItemInterface;
-use Inhere\Asset\Interfaces\FilterInterface;
-use Inhere\Asset\Items\Css;
-use Inhere\Asset\Items\CssCode;
-use Inhere\Asset\Items\Js;
-use Inhere\Asset\Items\JsCode;
+use Inhere\Asset\Item\Css;
+use Inhere\Asset\Item\CssCode;
+use Inhere\Asset\Item\Js;
+use Inhere\Asset\Item\JsCode;
 
 /**
  * Class AssetBag
@@ -122,7 +119,7 @@ class AssetBag implements AssetBagInterface, \Countable, \Iterator
      * @param array|null $attributes
      * @return $this
      */
-    public function addCss(string $path, $atLocal = null, $filter = true, array $attributes = null)
+    public function addCss(string $path, $atLocal = null, $filter = true, array $attributes = null): self
     {
         $atLocal = $atLocal ?? $this->atLocal;
         $attributes = $attributes ?: $this->attributes;
@@ -136,7 +133,7 @@ class AssetBag implements AssetBagInterface, \Countable, \Iterator
      * @param array|null $attributes
      * @return $this
      */
-    public function addCssCode(string $content, $filter = true, array $attributes = null)
+    public function addCssCode(string $content, $filter = true, array $attributes = null): self
     {
         $attributes = $attributes ?: $this->attributes;
 
@@ -150,7 +147,7 @@ class AssetBag implements AssetBagInterface, \Countable, \Iterator
      * @param array|null $attributes
      * @return $this
      */
-    public function addJs(string $path, $atLocal = true, $filter = true, array $attributes = null)
+    public function addJs(string $path, $atLocal = true, $filter = true, array $attributes = null): self
     {
         $atLocal = $atLocal ?? $this->atLocal;
         $attributes = $attributes ?: $this->attributes;
@@ -164,7 +161,7 @@ class AssetBag implements AssetBagInterface, \Countable, \Iterator
      * @param array|null $attributes
      * @return $this
      */
-    public function addJsCode(string $content, $filter = true, array $attributes = null)
+    public function addJsCode(string $content, $filter = true, array $attributes = null): self
     {
         $attributes = $attributes ?: $this->attributes;
 
@@ -175,7 +172,7 @@ class AssetBag implements AssetBagInterface, \Countable, \Iterator
      * @param AssetItemInterface $item
      * @return $this
      */
-    public function add(AssetItemInterface $item)
+    public function add(AssetItemInterface $item): self
     {
         if (!$this->has($item)) {
             if ($item instanceof AssetItemInterface) {
@@ -195,7 +192,7 @@ class AssetBag implements AssetBagInterface, \Countable, \Iterator
      * @param AssetItemInterface $item
      * @return $this
      */
-    public function addItem(AssetItemInterface $item)
+    public function addItem(AssetItemInterface $item): self
     {
         return $this->add($item);
     }
@@ -204,7 +201,7 @@ class AssetBag implements AssetBagInterface, \Countable, \Iterator
      * @param AssetItemInterface $item
      * @return bool
      */
-    public function has(AssetItemInterface $item)
+    public function has(AssetItemInterface $item): bool
     {
         return isset($this->keys[$item->getKey()]);
     }
@@ -213,7 +210,7 @@ class AssetBag implements AssetBagInterface, \Countable, \Iterator
      * @param bool $merge
      * @return $this
      */
-    public function merge($merge = true)
+    public function merge($merge = true): self
     {
         $this->merged = (bool)$merge;
 
@@ -224,7 +221,7 @@ class AssetBag implements AssetBagInterface, \Countable, \Iterator
      * @param FilterInterface $filter
      * @return $this
      */
-    public function addFilter(FilterInterface $filter)
+    public function addFilter(FilterInterface $filter): self
     {
         $this->filters[] = $filter;
 
@@ -271,7 +268,7 @@ class AssetBag implements AssetBagInterface, \Countable, \Iterator
      * Returns true on success or false on failure.
      * @since 5.0.0
      */
-    public function valid()
+    public function valid(): bool
     {
         return isset($this->items[$this->index]);
     }
@@ -296,7 +293,7 @@ class AssetBag implements AssetBagInterface, \Countable, \Iterator
      * The return value is cast to an integer.
      * @since 5.1.0
      */
-    public function count()
+    public function count(): int
     {
         return \count($this->items);
     }
@@ -323,7 +320,7 @@ class AssetBag implements AssetBagInterface, \Countable, \Iterator
     /**
      * @return string
      */
-    public function getTargetPath()
+    public function getTargetPath(): string
     {
         return $this->targetPath;
     }
@@ -342,7 +339,7 @@ class AssetBag implements AssetBagInterface, \Countable, \Iterator
     /**
      * @return string
      */
-    public function getTargetUri()
+    public function getTargetUri(): string
     {
         return $this->targetUri;
     }
@@ -387,7 +384,7 @@ class AssetBag implements AssetBagInterface, \Countable, \Iterator
      * @param array $filters
      * @return $this
      */
-    public function setFilters(array $filters)
+    public function setFilters(array $filters): self
     {
         $this->filters = $filters;
 
@@ -406,7 +403,7 @@ class AssetBag implements AssetBagInterface, \Countable, \Iterator
      * @param array $items
      * @return $this
      */
-    public function setItems(array $items)
+    public function setItems(array $items): self
     {
         foreach ($items as $item) {
             $this->addItem($item);

@@ -6,13 +6,13 @@
  * Time: 19:37
  */
 
-namespace Inhere\Asset\Filters;
+namespace Inhere\Asset\Filter;
 
-use Inhere\Asset\Interfaces\FilterInterface;
+use Inhere\Asset\FilterInterface;
 
 /**
  * Class NullFilter
- * @package Inhere\Asset\Filters
+ * @package Inhere\Asset\Filter
  */
 class NullFilter implements FilterInterface
 {

@@ -6,11 +6,11 @@
  * Time: 21:13
  */
 
-namespace Inhere\Asset\Interfaces;
+namespace Inhere\Asset;
 
 /**
  * Interface AssetBagInterface
- * @package Inhere\Asset\Interfaces
+ * @package Inhere\Asset
  */
 interface AssetBagInterface
 {

@@ -6,13 +6,13 @@
  * Time: 19:41
  */
 
-namespace Inhere\Asset\Filters;
+namespace Inhere\Asset\Filter;
 
-use Inhere\Asset\Interfaces\FilterInterface;
+use Inhere\Asset\FilterInterface;
 
 /**
  * Class CssMinify
- * @package Inhere\Asset\Filters
+ * @package Inhere\Asset\Filter
  */
 class CssMinify implements FilterInterface
 {

@@ -6,11 +6,11 @@
  * Time: 23:17
  */
 
-namespace Inhere\Asset\Interfaces;
+namespace Inhere\Asset;
 
 /**
  * Interface ManagerInterface
- * @package Inhere\Asset\Interfaces
+ * @package Inhere\Asset
  */
 interface ManagerInterface
 {

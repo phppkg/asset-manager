@@ -6,11 +6,11 @@
  * Time: 19:27
  */
 
-namespace Inhere\Asset\Items;
+namespace Inhere\Asset\Item;
 
 /**
  * Class CssCode
- * @package Inhere\Asset\Items
+ * @package Inhere\Asset\Item
  */
 final class CssCode extends CodeItem
 {
@@ -30,7 +30,7 @@ final class CssCode extends CodeItem
      * @param bool $wrapperTag
      * @return string
      */
-    public function toString($wrapperTag = true)
+    public function toString($wrapperTag = true): string
     {
         $content = $this->getContent();
 

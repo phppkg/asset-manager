@@ -6,11 +6,11 @@
  * Time: 19:27
  */
 
-namespace Inhere\Asset\Items;
+namespace Inhere\Asset\Item;
 
 /**
  * Class CssFile
- * @package Inhere\Asset\Items
+ * @package Inhere\Asset\Item
  */
 final class Css extends FileItem
 {
@@ -26,7 +26,7 @@ final class Css extends FileItem
      * @param bool $wrapperTag
      * @return string
      */
-    public function toString($wrapperTag = true)
+    public function toString($wrapperTag = true): string
     {
         $path = $this->getPath();
 
