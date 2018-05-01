@@ -6,4 +6,4 @@
  * Time: 19:16
  */
 
-require dirname(__DIR__) . '/tests/s-autoload.php';
+require dirname(__DIR__) . '/tests/boot.php';

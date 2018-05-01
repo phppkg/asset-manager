@@ -41,7 +41,7 @@ abstract class AssetItem implements AssetItemInterface
      * @param bool $filter
      * @param null|array $attributes
      */
-    public function __construct(string $type, $filter = true, $attributes = null)
+    public function __construct(string $type, $filter = true, array $attributes = null)
     {
         $this->type = $type;
         $this->filter = (bool)$filter;

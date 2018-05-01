@@ -17,7 +17,7 @@ final class JsCode extends CodeItem
     /**
      * @inheritdoc
      */
-    public function __construct($type, $content, $filter = true, $attributes = null)
+    public function __construct($type, $content, $filter = true, array $attributes = null)
     {
         if (!$attributes) {
             $attributes['type'] = 'text/javascript';

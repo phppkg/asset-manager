@@ -8,7 +8,7 @@
 
 namespace Inhere\Asset;
 
-use Inhere\Asset\Item\Css;
+use Inhere\Asset\Item\CssFile;
 use Inhere\Asset\Item\CssCode;
 use Inhere\Asset\Item\FileItem;
 use Inhere\Asset\Item\Js;
@@ -23,12 +23,10 @@ class AssetManager implements ManagerInterface
     const TYPE_CSS = 'css';
     const TYPE_JS = 'js';
 
-    /**  @var array */
+    /** @var array */
     private $options;
 
-    /**
-     * @var AssetBag[]
-     */
+    /** @var AssetBag[] */
     private $bags = [];
 
     /** @var array */
@@ -54,7 +52,7 @@ class AssetManager implements ManagerInterface
      */
     public function addCss(string $path, $local = true, $filter = true, array $attributes = null): self
     {
-        return $this->addItemByType(AssetItem::CSS, new Css($path, $local, $filter, $attributes));
+        return $this->addItemByType(AssetItem::CSS, new CssFile($path, $local, $filter, $attributes));
     }
 
     /**

@@ -17,7 +17,7 @@ final class CssCode extends CodeItem
     /**
      * @inheritdoc
      */
-    public function __construct($content, $filter = true, $attributes = null)
+    public function __construct($content, $filter = true, array $attributes = null)
     {
         if (!$attributes) {
             $attributes['type'] = 'text/css';

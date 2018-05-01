@@ -6,17 +6,15 @@
  * Time: 上午12:33
  */
 
-namespace Inhere\Asset;
+namespace Inhere\Asset\Util;
 
 /**
  * Class AssetHelper
- * @package Inhere\Asset
+ * @package Inhere\Asset\Util
  */
 class AssetHelper
 {
-    /**
-     * @var array
-     */
+    /** @var array */
     public static $patterns = [
         'cssJs' => '/.\.(css|js)$/i',
         'css' => '/.\.css$/i',

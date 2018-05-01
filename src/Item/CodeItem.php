@@ -33,7 +33,7 @@ class CodeItem extends AssetItem
      * @param bool $filter
      * @param null|array $attributes
      */
-    public function __construct(string $type, string $content, $filter = true, $attributes = null)
+    public function __construct(string $type, string $content, $filter = true, array $attributes = null)
     {
         $this->content = $content;
 

@@ -6,12 +6,12 @@
  * Time: 19:04
  */
 
-namespace Inhere\Asset;
+namespace Inhere\Asset\Util;
 
 /**
  * Class AutoInjector
  * - 自动注入到HTML中指定位置
- * @package Inhere\Asset
+ * @package Inhere\Asset\Util
  */
 class AutoInjector
 {
@@ -37,7 +37,7 @@ class AutoInjector
      */
     public function inject($html)
     {
-        $html = trim($html);
+        $html = \trim($html);
 
         if (!($assets = $this->assets)) {
             return $html;

@@ -39,7 +39,7 @@ class FileItem extends AssetItem
      * @param bool $filter
      * @param null|array $attributes
      */
-    public function __construct(string $type, string $path, $local = true, $filter = true, $attributes = null)
+    public function __construct(string $type, string $path, $local = true, $filter = true, array $attributes = null)
     {
         $this->path = $path;
         $this->local = (bool)$local;

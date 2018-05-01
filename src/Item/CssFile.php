@@ -9,17 +9,17 @@
 namespace Inhere\Asset\Item;
 
 /**
- * Class JsFile
+ * Class CssFile
  * @package Inhere\Asset\Item
  */
-final class Js extends FileItem
+final class CssFile extends FileItem
 {
     /**
      * @inheritdoc
      */
-    public function __construct($type, $path, $local = true, $filter = true, $attributes = null)
+    public function __construct(string $path, $local = true, $filter = true, array $attributes = null)
     {
-        parent::__construct(self::JS, $path, $local, $filter, $attributes);
+        parent::__construct(self::CSS, $path, $local, $filter, $attributes);
     }
 
     /**
@@ -31,7 +31,11 @@ final class Js extends FileItem
         $path = $this->getPath();
 
         if ($wrapperTag) {
-            return sprintf('<script src="%s" %s></script>', $path, $this->buildAttributes());
+            return sprintf(
+                '<link href="%s" rel="stylesheet" %s>',
+                $path,
+                $this->buildAttributes()
+            );
         }
 
         return $path;

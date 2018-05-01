@@ -8,9 +8,9 @@
 
 namespace Inhere\Asset;
 
-use Inhere\Asset\Item\Css;
+use Inhere\Asset\Item\CssFile;
 use Inhere\Asset\Item\CssCode;
-use Inhere\Asset\Item\Js;
+use Inhere\Asset\Item\JsFile;
 use Inhere\Asset\Item\JsCode;
 
 /**
@@ -50,9 +50,7 @@ class AssetBag implements AssetBagInterface, \Countable, \Iterator
      */
     protected $targetUri;
 
-    /**
-     * @var bool
-     */
+    /** @var bool */
     protected $targetLocal = false;
 
     /**
@@ -73,9 +71,7 @@ class AssetBag implements AssetBagInterface, \Countable, \Iterator
      */
     private $keys;
 
-    /**
-     * @var array
-     */
+    /** @var array */
     protected $items = [];
 
     /**
@@ -83,17 +79,13 @@ class AssetBag implements AssetBagInterface, \Countable, \Iterator
      */
     protected $codes = [];
 
-    /**
-     * @var array
-     */
+    /** @var array */
     protected $filters = [];
 
     /** @var bool */
     private $atLocal;
 
-    /**
-     * @var array
-     */
+    /** @var array */
     private $attributes = [];
 
     /** @var int */
@@ -113,6 +105,7 @@ class AssetBag implements AssetBagInterface, \Countable, \Iterator
     }
 
     /**
+     * add a css file asset
      * @param string $path
      * @param null|bool $atLocal
      * @param bool $filter
@@ -124,10 +117,11 @@ class AssetBag implements AssetBagInterface, \Countable, \Iterator
         $atLocal = $atLocal ?? $this->atLocal;
         $attributes = $attributes ?: $this->attributes;
 
-        return $this->add(new Css($path, $atLocal, $filter, $attributes));
+        return $this->add(new CssFile($path, $atLocal, $filter, $attributes));
     }
 
     /**
+     * add a css code asset
      * @param string $content
      * @param bool $filter
      * @param array|null $attributes
@@ -141,6 +135,7 @@ class AssetBag implements AssetBagInterface, \Countable, \Iterator
     }
 
     /**
+     * add a js file asset
      * @param string $path
      * @param null|bool $atLocal
      * @param bool $filter
@@ -152,10 +147,11 @@ class AssetBag implements AssetBagInterface, \Countable, \Iterator
         $atLocal = $atLocal ?? $this->atLocal;
         $attributes = $attributes ?: $this->attributes;
 
-        return $this->add(new Js($path, $atLocal, $filter, $attributes));
+        return $this->add(new JsFile($path, $atLocal, $filter, $attributes));
     }
 
     /**
+     * add a js code asset
      * @param string $content
      * @param bool $filter
      * @param array|null $attributes

@@ -1,6 +1,6 @@
 <?php
 
-namespace Inhere\Asset\Tests;
+namespace Inhere\Asset\Test;
 
 use Inhere\Asset\AssetBagInterface;
 use PHPUnit\Framework\TestCase;
