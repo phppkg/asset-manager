@@ -6,13 +6,13 @@
  * Time: 19:41
  */
 
-namespace Inhere\Asset\Filter;
+namespace PhpComp\Asset\Filter;
 
-use Inhere\Asset\FilterInterface;
+use PhpComp\Asset\FilterInterface;
 
 /**
  * Class JsMinify
- * @package Inhere\Asset\Filter
+ * @package PhpComp\Asset\Filter
  */
 class JsMinify implements FilterInterface
 {

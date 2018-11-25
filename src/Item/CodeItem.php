@@ -6,13 +6,13 @@
  * Time: 18:02
  */
 
-namespace Inhere\Asset\Item;
+namespace PhpComp\Asset\Item;
 
-use Inhere\Asset\AssetItem;
+use PhpComp\Asset\AssetItem;
 
 /**
  * Class CodeItem
- * @package Inhere\Asset\Item
+ * @package PhpComp\Asset\Item
  */
 class CodeItem extends AssetItem
 {
@@ -31,9 +31,9 @@ class CodeItem extends AssetItem
      * @param string $type
      * @param string $content
      * @param bool $filter
-     * @param null|array $attributes
+     * @param array $attributes
      */
-    public function __construct(string $type, string $content, $filter = true, array $attributes = null)
+    public function __construct(string $type, string $content, $filter = true, array $attributes = [])
     {
         $this->content = $content;
 

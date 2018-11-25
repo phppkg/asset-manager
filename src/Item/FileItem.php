@@ -6,13 +6,14 @@
  * Time: 17:57
  */
 
-namespace Inhere\Asset\Item;
+namespace PhpComp\Asset\Item;
 
-use Inhere\Asset\AssetItem;
+use PhpComp\Asset\Util\AssetHelper;
+use PhpComp\Asset\AssetItem;
 
 /**
  * Class FileItem
- * @package Inhere\Asset\Item
+ * @package PhpComp\Asset\Item
  */
 class FileItem extends AssetItem
 {
@@ -37,12 +38,12 @@ class FileItem extends AssetItem
      * @param string $path
      * @param bool $local
      * @param bool $filter
-     * @param null|array $attributes
+     * @param array $attributes
      */
-    public function __construct(string $type, string $path, $local = true, $filter = true, array $attributes = null)
+    public function __construct(string $type, string $path, bool $local = true, $filter = true, array $attributes = [])
     {
-        $this->path = $path;
-        $this->local = (bool)$local;
+        $this->local = $local;
+        $this->setPath($path);
 
         parent::__construct($type, $filter, $attributes);
 
@@ -77,7 +78,12 @@ class FileItem extends AssetItem
      */
     public function setPath(string $path): self
     {
-        $this->path = $path;
+        $this->path = \trim($path);
+
+        // check is remote asset path.
+        if (AssetHelper::isRemotePath($this->path)) {
+            $this->local = false;
+        }
 
         return $this;
     }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Inhere\Asset\Test;
+namespace PhpComp\Asset\Test;
 
 use PHPUnit\Framework\TestCase;
 

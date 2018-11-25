@@ -6,11 +6,11 @@
  * Time: 23:17
  */
 
-namespace Inhere\Asset;
+namespace PhpComp\Asset;
 
 /**
  * Interface ManagerInterface
- * @package Inhere\Asset
+ * @package PhpComp\Asset
  */
 interface ManagerInterface
 {

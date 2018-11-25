@@ -1,9 +1,15 @@
 {
-  "name": "inhere/asset-manager",
+  "name": "php-comp/asset-manager",
   "type": "library",
-  "description": "a php asset manager library.",
-  "keywords": ["library","asset","asset-manager","js", "css"],
-  "homepage": "https://github.com/inhere/php-asset-manager",
+  "description": "a simple php asset manager library.",
+  "keywords": [
+    "library",
+    "asset",
+    "asset-manager",
+    "js",
+    "css"
+  ],
+  "homepage": "https://github.com/php-comp/asset-manager",
   "license": "MIT",
   "authors": [
     {
@@ -13,15 +19,15 @@
     }
   ],
   "require": {
-    "php": ">7.0.0",
+    "php": ">7.1",
     "toolkit/file-utils": "~1.0"
   },
   "autoload": {
     "psr-4": {
-      "Inhere\\Assets\\" : "src/"
+      "PhpComp\\Assets\\": "src/"
     }
   },
   "suggest": {
-    "matthiasmullie/minify" : "compress css and js. if you want to compress assets."
+    "matthiasmullie/minify": "compress css and js. if you want to compress assets."
   }
 }

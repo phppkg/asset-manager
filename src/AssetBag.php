@@ -6,20 +6,24 @@
  * Time: 19:09
  */
 
-namespace Inhere\Asset;
+namespace PhpComp\Asset;
 
-use Inhere\Asset\Item\CssFile;
-use Inhere\Asset\Item\CssCode;
-use Inhere\Asset\Item\JsFile;
-use Inhere\Asset\Item\JsCode;
+use PhpComp\Asset\Item\CssFile;
+use PhpComp\Asset\Item\CssCode;
+use PhpComp\Asset\Item\JsFile;
+use PhpComp\Asset\Item\JsCode;
 
 /**
  * Class AssetBag
- * @package Inhere\Asset
+ * @package PhpComp\Asset
  * @ref Phalcon\Assets
  */
 class AssetBag implements AssetBagInterface, \Countable, \Iterator
 {
+    // default bag name.
+    public const CSS_BAG = 'css';
+    public const JS_BAG = 'js';
+
     /**
      * asset bag name
      * @var string
@@ -110,7 +114,7 @@ class AssetBag implements AssetBagInterface, \Countable, \Iterator
      * @param array|null $attributes
      * @return $this
      */
-    public function addCss(string $path, $atLocal = null, $filter = true, array $attributes = null): self
+    public function addCss(string $path, $atLocal = null, $filter = true, array $attributes = []): self
     {
         $atLocal = $atLocal ?? $this->atLocal;
         $attributes = $attributes ?: $this->attributes;
@@ -125,7 +129,7 @@ class AssetBag implements AssetBagInterface, \Countable, \Iterator
      * @param array|null $attributes
      * @return $this
      */
-    public function addCssCode(string $content, $filter = true, array $attributes = null): self
+    public function addCssCode(string $content, $filter = true, array $attributes = []): self
     {
         $attributes = $attributes ?: $this->attributes;
 
@@ -140,7 +144,7 @@ class AssetBag implements AssetBagInterface, \Countable, \Iterator
      * @param array|null $attributes
      * @return $this
      */
-    public function addJs(string $path, $atLocal = true, $filter = true, array $attributes = null): self
+    public function addJs(string $path, $atLocal = true, $filter = true, array $attributes = []): self
     {
         $atLocal = $atLocal ?? $this->atLocal;
         $attributes = $attributes ?: $this->attributes;
@@ -155,7 +159,7 @@ class AssetBag implements AssetBagInterface, \Countable, \Iterator
      * @param array|null $attributes
      * @return $this
      */
-    public function addJsCode(string $content, $filter = true, array $attributes = null): self
+    public function addJsCode(string $content, $filter = true, array $attributes = []): self
     {
         $attributes = $attributes ?: $this->attributes;
 

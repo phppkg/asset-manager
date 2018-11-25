@@ -6,11 +6,11 @@
  * Time: 上午12:33
  */
 
-namespace Inhere\Asset\Util;
+namespace PhpComp\Asset\Util;
 
 /**
  * Class AssetHelper
- * @package Inhere\Asset\Util
+ * @package PhpComp\Asset\Util
  */
 class AssetHelper
 {
@@ -50,7 +50,7 @@ class AssetHelper
      * @param $file
      * @return bool
      */
-    public static function isCss($file): bool
+    public static function isCss(string $file): bool
     {
         return 1 === \preg_match(static::$patterns['css'], trim($file));
     }
@@ -68,7 +68,7 @@ class AssetHelper
      * @param $file
      * @return bool
      */
-    public static function isCssOrJs($file): bool
+    public static function isCssOrJs(string $file): bool
     {
         return 1 === \preg_match(static::$patterns['cssJs'], trim($file));
     }
@@ -77,27 +77,36 @@ class AssetHelper
      * @param $file
      * @return bool
      */
-    public static function isMinCssOrJs($file): bool
+    public static function isMinCssOrJs(string $file): bool
     {
-        return 1 === \preg_match(static::$patterns['min'], trim($file));
+        return 1 === \preg_match(static::$patterns['min'], \trim($file));
     }
 
     /**
      * @param $file
      * @return bool
      */
-    public static function isFont($file): bool
+    public static function isFont(string $file): bool
     {
-        return 1 === \preg_match(static::$patterns['font'], trim($file));
+        return 1 === \preg_match(static::$patterns['font'], \trim($file));
     }
 
     /**
      * @param $file
      * @return bool
      */
-    public static function isImage($file): bool
+    public static function isImage(string $file): bool
     {
-        return 1 === \preg_match(static::$patterns['img'], trim($file));
+        return 1 === \preg_match(static::$patterns['img'], \trim($file));
     }
 
+    /**
+     * @param string $path
+     * @return bool
+     */
+    public static function isRemotePath(string $path): bool
+    {
+        return 0 === \strpos($path, 'http://') || 0 === \strpos($path, 'https://');
+    }
 }
+

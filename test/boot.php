@@ -13,11 +13,11 @@ spl_autoload_register(function($class)
 {
     $file = null;
 
-    if (0 === strpos($class,'Inhere\Asset\Test\\')) {
-        $path = str_replace('\\', '/', substr($class, strlen('Inhere\Asset\Test\\')));
+    if (0 === strpos($class,'PhpComp\Asset\Test\\')) {
+        $path = str_replace('\\', '/', substr($class, strlen('PhpComp\Asset\Test\\')));
         $file = dirname(__DIR__) . "/tests/{$path}.php";
-    } elseif (0 === strpos($class,'Inhere\Asset\\')) {
-        $path = str_replace('\\', '/', substr($class, strlen('Inhere\Asset\\')));
+    } elseif (0 === strpos($class,'PhpComp\Asset\\')) {
+        $path = str_replace('\\', '/', substr($class, strlen('PhpComp\Asset\\')));
         $file = dirname(__DIR__) . "/src/{$path}.php";
     }
 

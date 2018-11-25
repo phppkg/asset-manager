@@ -6,13 +6,13 @@
  * Time: 19:37
  */
 
-namespace Inhere\Asset\Filter;
+namespace PhpComp\Asset\Filter;
 
-use Inhere\Asset\FilterInterface;
+use PhpComp\Asset\FilterInterface;
 
 /**
  * Class NullFilter
- * @package Inhere\Asset\Filter
+ * @package PhpComp\Asset\Filter
  */
 class NullFilter implements FilterInterface
 {

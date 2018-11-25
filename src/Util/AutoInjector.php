@@ -6,12 +6,12 @@
  * Time: 19:04
  */
 
-namespace Inhere\Asset\Util;
+namespace PhpComp\Asset\Util;
 
 /**
  * Class AutoInjector
  * - 自动注入到HTML中指定位置
- * @package Inhere\Asset\Util
+ * @package PhpComp\Asset\Util
  */
 class AutoInjector
 {

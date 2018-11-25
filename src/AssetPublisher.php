@@ -6,7 +6,7 @@
  * Time: 下午9:53
  */
 
-namespace Inhere\Asset;
+namespace PhpComp\Asset;
 
 use Toolkit\File\Exception\FileSystemException;
 use Toolkit\File\Directory;
@@ -16,7 +16,7 @@ use Toolkit\File\FileFinder;
 /**
  * 资源发布 -- 将资源发布到可访问目录(e.g. from vendor to web dir)
  * Class AssetPublisher
- * @package Inhere\Asset
+ * @package PhpComp\Asset
  */
 class AssetPublisher
 {

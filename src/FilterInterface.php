@@ -6,11 +6,11 @@
  * Time: 19:38
  */
 
-namespace Inhere\Asset;
+namespace PhpComp\Asset;
 
 /**
  * Interface FilterInterface
- * @package Inhere\Asset
+ * @package PhpComp\Asset
  */
 interface FilterInterface
 {

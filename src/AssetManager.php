@@ -6,25 +6,22 @@
  * Time: 19:11
  */
 
-namespace Inhere\Asset;
+namespace PhpComp\Asset;
 
-use Inhere\Asset\Item\CssFile;
-use Inhere\Asset\Item\CssCode;
-use Inhere\Asset\Item\FileItem;
-use Inhere\Asset\Item\JsCode;
-use Inhere\Asset\Item\JsFile;
+use PhpComp\Asset\Item\CssFile;
+use PhpComp\Asset\Item\CssCode;
+use PhpComp\Asset\Item\FileItem;
+use PhpComp\Asset\Item\JsCode;
+use PhpComp\Asset\Item\JsFile;
 
 /**
  * Class AssetManager
- * @package Inhere\Asset
+ * @package PhpComp\Asset
  */
 class AssetManager implements ManagerInterface
 {
-    const TYPE_CSS = 'css';
-    const TYPE_JS = 'js';
-
-    const CSS_BAG = 'css';
-    const JS_BAG = 'js';
+    public const TYPE_CSS = 'css';
+    public const TYPE_JS = 'js';
 
     /** @var array */
     private $options;
@@ -38,6 +35,15 @@ class AssetManager implements ManagerInterface
     ];
 
     /**
+     * @param array $options
+     * @return AssetManager
+     */
+    public static function create(array $options = []): self
+    {
+        return new self($options);
+    }
+
+    /**
      * AssetManager constructor.
      * @param array $options
      */
@@ -47,62 +53,63 @@ class AssetManager implements ManagerInterface
     }
 
     /**
-     * @param string $path
-     * @param bool $local
+     * add css file to the default css asset bag
+     * @param string $path css file path.
+     * @param bool $local local file ?
      * @param bool $filter
-     * @param null|array $attributes
+     * @param array $attributes
      * @return $this
      */
-    public function addCss(string $path, $local = true, $filter = true, array $attributes = null): self
+    public function addCss(string $path, bool $local = true, $filter = true, array $attributes = []): self
     {
-        return $this->addItemByType(AssetItem::CSS_FILE, new CssFile($path, $local, $filter, $attributes));
+        return $this->addItemToBag(new CssFile($path, $local, $filter, $attributes), AssetBag::CSS_BAG);
     }
 
     /**
+     * add css code to the default css asset bag
      * @param string $content
      * @param bool $filter
-     * @param null|array $attributes
+     * @param array $attributes
      * @return $this
      */
     public function addCssCode(string $content, $filter = true, $attributes = null): self
     {
-        return $this->addItemByType(AssetItem::CSS_CODE, new CssCode($content, $filter, $attributes));
+        return $this->addItemToBag(new CssCode($content, $filter, $attributes), AssetBag::CSS_BAG);
     }
 
     /**
+     * add js file to the default js asset bag
      * @param string $path
      * @param bool $local
      * @param bool $filter
-     * @param null|array $attributes
+     * @param array $attributes
      * @return $this
      */
-    public function addJs(string $path, $local = true, $filter = true, array $attributes = null): self
+    public function addJs(string $path, bool $local = true, $filter = true, array $attributes = []): self
     {
-        return $this->addItemByType(AssetItem::JS_FILE, new JsFile($path, $local, $filter, $attributes));
+        return $this->addItemToBag(new JsFile($path, $local, $filter, $attributes), AssetBag::JS_BAG);
     }
 
     /**
+     * add js code to the default js asset bag
      * @param string $content
      * @param bool $filter
-     * @param null|array $attributes
+     * @param array $attributes
      * @return $this
      */
-    public function addJsCode(string $content, $filter = true, array $attributes = null): self
+    public function addJsCode(string $content, $filter = true, array $attributes = []): self
     {
-        return $this->addItemByType(AssetItem::JS_CODE, new JsCode($content, $filter, $attributes));
+        return $this->addItemToBag(new JsCode($content, $filter, $attributes), AssetBag::JS_BAG);
     }
 
     /**
-     * @param string $type
      * @param AssetItemInterface $item
+     * @param string $name
      * @return $this
      */
-    public function addItemByType(string $type, AssetItemInterface $item): self
+    public function addItemToBag(AssetItemInterface $item, string $name): self
     {
-        $bag = $this->newBag($type);
-
-        $bag->add($item);
-
+        $this->newBag($name)->add($item);
         return $this;
     }
 
@@ -116,15 +123,13 @@ class AssetManager implements ManagerInterface
     }
 
     /**
-     * @param string $name
+     * @param string $name bag name
      * @return AssetBag
      */
     public function newBag(string $name): AssetBag
     {
-        /** @noinspection ExceptionsAnnotatingAndHandlingInspection */
         if (!$bag = $this->getBag($name)) {
             $bag = new AssetBag($name);
-
             $this->bags[$name] = $bag;
         }
 
@@ -185,7 +190,6 @@ class AssetManager implements ManagerInterface
     public function setBag(string $name, AssetBagInterface $bag): self
     {
         $this->bags[$name] = $bag;
-
         return $this;
     }
 
@@ -197,7 +201,6 @@ class AssetManager implements ManagerInterface
     public function set(string $name, AssetBagInterface $bag): self
     {
         $this->bags[$name] = $bag;
-
         return $this;
     }
 
@@ -235,7 +238,7 @@ class AssetManager implements ManagerInterface
      * @param $callback
      * @throws \RuntimeException
      */
-    public function outputCss(string $bagName = null, $callback)
+    public function outputCss(string $bagName = null, $callback = null)
     {
         /** @var AssetBag $bag */
         $bag = $bagName ? $this->getBag($bagName, true) : $this->getJs();
@@ -248,7 +251,7 @@ class AssetManager implements ManagerInterface
      * @param $callback
      * @throws \RuntimeException
      */
-    public function outputJs(string $bagName = null, $callback)
+    public function outputJs(string $bagName = null, $callback = null)
     {
         /** @var AssetBag $bag */
         $bag = $bagName ? $this->getBag($bagName, true) : $this->getJs();
@@ -268,7 +271,9 @@ class AssetManager implements ManagerInterface
             $file->getPath();
         }
 
-        $callback($this);
+        if ($callback) {
+            $callback($this);
+        }
     }
 
     public function getLinks(AssetBag $bag, $wrapperTag = true)

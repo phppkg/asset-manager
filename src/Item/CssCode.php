@@ -6,18 +6,18 @@
  * Time: 19:27
  */
 
-namespace Inhere\Asset\Item;
+namespace PhpComp\Asset\Item;
 
 /**
  * Class CssCode
- * @package Inhere\Asset\Item
+ * @package PhpComp\Asset\Item
  */
 final class CssCode extends CodeItem
 {
     /**
      * @inheritdoc
      */
-    public function __construct($content, $filter = true, array $attributes = null)
+    public function __construct($content, $filter = true, array $attributes = [])
     {
         if (!$attributes) {
             $attributes['type'] = 'text/css';

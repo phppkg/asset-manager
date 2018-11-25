@@ -6,11 +6,11 @@
  * Time: 19:29
  */
 
-namespace Inhere\Asset;
+namespace PhpComp\Asset;
 
 /**
  * Class AssetItem
- * @package Inhere\Asset
+ * @package PhpComp\Asset
  */
 abstract class AssetItem implements AssetItemInterface
 {
@@ -31,7 +31,7 @@ abstract class AssetItem implements AssetItemInterface
     private $filter;
 
     /**
-     * @var null|array
+     * @var array
      */
     private $attributes;
 
@@ -39,9 +39,9 @@ abstract class AssetItem implements AssetItemInterface
      * Resource constructor.
      * @param string $type
      * @param bool $filter
-     * @param null|array $attributes
+     * @param array $attributes
      */
-    public function __construct(string $type, $filter = true, array $attributes = null)
+    public function __construct(string $type, $filter = true, array $attributes = [])
     {
         $this->type = $type;
         $this->filter = (bool)$filter;

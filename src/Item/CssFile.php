@@ -6,18 +6,18 @@
  * Time: 19:27
  */
 
-namespace Inhere\Asset\Item;
+namespace PhpComp\Asset\Item;
 
 /**
  * Class CssFile
- * @package Inhere\Asset\Item
+ * @package PhpComp\Asset\Item
  */
 final class CssFile extends FileItem
 {
     /**
      * @inheritdoc
      */
-    public function __construct(string $path, $local = true, $filter = true, array $attributes = null)
+    public function __construct(string $path, bool $local = true, $filter = true, array $attributes = [])
     {
         parent::__construct(self::CSS_FILE, $path, $local, $filter, $attributes);
     }

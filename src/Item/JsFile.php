@@ -6,18 +6,18 @@
  * Time: 19:27
  */
 
-namespace Inhere\Asset\Item;
+namespace PhpComp\Asset\Item;
 
 /**
  * Class JsFile
- * @package Inhere\Asset\Item
+ * @package PhpComp\Asset\Item
  */
 final class JsFile extends FileItem
 {
     /**
      * @inheritdoc
      */
-    public function __construct($type, $path, $local = true, $filter = true, array $attributes = null)
+    public function __construct($type, $path, bool $local = true, $filter = true, array $attributes = [])
     {
         parent::__construct(self::JS_FILE, $path, $local, $filter, $attributes);
     }
